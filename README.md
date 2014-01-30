@@ -27,11 +27,11 @@ Gets the XY coordinates of the textarea's caret relative to the textarea. You ca
 
 ### .textareaHelper('setCaretPos', index)
 
-Sets caret position
+Sets caret position.
 
 ### .textareaHelper('getOriginalCaretPos')
 
-Gets the index of the caret position
+Gets the index of the caret position.
 
 ### .textareaHelper('destroy')
 
