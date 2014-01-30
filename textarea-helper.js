@@ -35,7 +35,7 @@
   };
 
   (function () {
-    this.update = function () {
+    this.update = function (index) {
 
       // Copy styles.
       var styles = {};
@@ -45,13 +45,13 @@
       this.$mirror.css(styles).empty();
       
       // Update content and insert caret.
-      var caretPos = this.getOriginalCaretPos()
+      var caretPos = index || this.getOriginalCaretPos()
         , str      = this.$text.val()
         , pre      = document.createTextNode(str.substring(0, caretPos))
         , post     = document.createTextNode(str.substring(caretPos))
         , $car     = $('<span/>').addClass(caretClass).css('position', 'absolute').html('&nbsp;');
       this.$mirror.append(pre, $car, post)
-                  .scrollTop(this.$text.scrollTop());
+                  .scrollTop(this.$text.scrollTop()); 
     };
 
     this.destroy = function () {
@@ -60,15 +60,14 @@
       return null;
     };
 
-    this.caretPos = function () {
-      this.update();
+    this.caretPos = function (index) {
+      this.update(index);
       var $caret = this.$mirror.find('.' + caretClass)
         , pos    = $caret.position();
       if (this.$text.css('direction') === 'rtl') {
         pos.right = this.$mirror.innerWidth() - pos.left - $caret.width();
         pos.left = 'auto';
       }
-
       return pos;
     };
 
@@ -101,17 +100,21 @@
 
     //Adapted from http://stackoverflow.com/a/3651232
     this.setCaretPos = function(position){
+      this.setSelection(position, position);
+    };
+
+    this.setSelection = function(startPos, endPos){
       var text = this.$text[0];
       if(text.setSelectionRange)
       {
-        text.setSelectionRange(position, position);
+        text.setSelectionRange(startPos, endPos);
       }
       else if(text.createTextRange)
       {
         var range = text.createTextRange();
         range.collapse(true);
-        range.moveEnd('character', position);
-        range.moveStart('character', position);
+        range.moveEnd('character', endPos);
+        range.moveStart('character', startPos);
         range.select();
       }
     };

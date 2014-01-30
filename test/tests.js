@@ -31,6 +31,13 @@ describe('textareaHelper', function () {
     expect(obj.top).to.be.a('number');
   });
 
+  it('should set the caret position', function(){
+    $text.val('foofoofoofoofoo');
+    var number = Math.floor(Math.random()*10);
+    $text.textareaHelper('setCaretPos', number);
+    expect($text.textareaHelper('getOriginalCaretPos')).to.be(number)
+  });
+
   // http://stackoverflow.com/questions/499126/jquery-set-cursor-position-in-text-area
   function setSelectionRange(input, selectionStart, selectionEnd) {
     if (input.setSelectionRange) {
