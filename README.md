@@ -19,11 +19,19 @@ A small library that mirrors a textarea's content onto a div to add some interes
 
 ### .textareaHelper('height')
 
-Get's the textarea's content height.
+Gets the textarea's content height.
 
 ### .textareaHelper('caretPos')
 
-Get's the XY coordinates of the textarea's caret relative to the textarea.
+Gets the XY coordinates of the textarea's caret relative to the textarea. You can pass an index, which will return the XY coordinates of that index in the textarea relative to the textarea.  
+
+### .textareaHelper('setCaretPos', index)
+
+Sets caret position
+
+### .textareaHelper('getOriginalCaretPos')
+
+Gets the index of the caret position
 
 ### .textareaHelper('destroy')
 
