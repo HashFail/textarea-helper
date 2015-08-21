@@ -5,8 +5,8 @@ describe('textareaHelper', function () {
   });
 
   afterEach(function () {
-    $text.textareaHelper('destroy');
-    $text.remove();
+   $text.textareaHelper('destroy');
+   $text.remove();
   });
 
   it('should create a mirror on initialize', function () {
@@ -35,7 +35,7 @@ describe('textareaHelper', function () {
     $text.val('foofoofoofoofoo');
     var number = Math.floor(Math.random()*10);
     $text.textareaHelper('setCaretPos', number);
-    expect($text.textareaHelper('getOriginalCaretPos')).to.be(number)
+    expect($text.textareaHelper('getOriginalCaretPos')).to.be(number);
   });
 
   // http://stackoverflow.com/questions/499126/jquery-set-cursor-position-in-text-area
@@ -122,6 +122,14 @@ describe('textareaHelper', function () {
     $text.width(323).val('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     setSelectionRange($text[0], $text.val().length, $text.val().length);
     expect($text.textareaHelper('caretPos').top).to.be(prev);
+  });
+  
+  it('should work with whitespace', function(){
+    $text.val('\n\n\n\nfoofoofoofoofoo\n\n\n\n\n');
+    $text.textareaHelper('setCaretPos', 7);
+	var caretPos = $text.textareaHelper('caretPos');
+    expect(caretPos.top).to.be(92);
+	expect(caretPos.left).to.be(32.984375);
   });
 
 });

@@ -36,7 +36,8 @@
 
   (function () {
     this.update = function (index) {
-
+      var caretPos = index || this.getOriginalCaretPos();
+	  
       // Copy styles.
       var styles = {};
       for (var i = 0, style; style = mirrorStyles[i]; i++) {
@@ -45,10 +46,16 @@
       this.$mirror.css(styles).empty();
       
       // Update content and insert caret.
-      var caretPos = index || this.getOriginalCaretPos()
-        , str      = this.$text.val()
-        , pre      = document.createTextNode(str.substring(0, caretPos))
-        , post     = document.createTextNode(str.substring(caretPos))
+      var str = this.$text.val()
+	  var preText = str.substring(0, caretPos);
+	  // Dirty fix. Some browsers don't like to insert trailing white-space in TextNodes. 
+	  var postText = str.substring(caretPos);
+	  if(postText.match("\n+$")){
+	    postText = postText + "a";
+	  }
+	  
+      var pre      = document.createTextNode(preText)
+        , post     = document.createTextNode(postText)
         , $car     = $('<span/>').addClass(caretClass).css('position', 'absolute').html('&nbsp;');
       this.$mirror.append(pre, $car, post)
                   .scrollTop(this.$text.scrollTop()); 
